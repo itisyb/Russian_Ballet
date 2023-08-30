@@ -1,4 +1,3 @@
-<script>
 var urlParams = new URLSearchParams(window.location.search);
 
 if (urlParams.get('trial') === 'true') {
@@ -232,4 +231,3 @@ window.onload = async () => {
         }, 2000);
     });
 };
-</script>
