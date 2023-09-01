@@ -28,12 +28,19 @@ window.onload = async () => {
         var curDate = new Date(startDate.getTime());
         while (curDate <= endDate) {
             var dayOfWeek = curDate.getDay();
-            if (availableDays.includes(dayOfWeek) && selectedDays.includes(dayOfWeek)) {
+            const isHoliday = holidays.some(holiday => 
+                holiday.getDate() === curDate.getDate() &&
+                holiday.getMonth() === curDate.getMonth() &&
+                holiday.getFullYear() === curDate.getFullYear()
+            );
+            const isBreak = breaks.some(breakRange => 
+                curDate >= breakRange.start && curDate <= breakRange.end
+            );
+            if (availableDays.includes(dayOfWeek) && selectedDays.includes(dayOfWeek) && !isHoliday && !isBreak) {
                 count++;
             }
             curDate.setDate(curDate.getDate() + 1);
         }
-        console.log(count)
         return count;
     }
 
