@@ -81,7 +81,6 @@ window.onload = async () => {
             let product = dataStore.r["5"].d.Class_Schedule;
             Wized.data.setCookie("noOfDays", 0)
             Wized.data.setCookie("startdate", "")
-            Wized.data.setCookie("enddate", "")
             Wized.data.setCookie("schedule3", null)
             Wized.data.setCookie("trialdate", null)
 
@@ -181,7 +180,7 @@ window.onload = async () => {
                     });
                     picker_start.on('select', (evt) => {
                         const { date } = evt.detail;
-                        const endDate = new Date(dropdown.value); 
+                        const endDate = picker_end_date.getDate(); 
                         const startDate = picker_start.getDate();
                         const selectedSchedule = product.filter(schedule => selectedDays.includes(dayMap[schedule.DaysOfWeek]));
                         Wized.data.setCookie("selectedDays", JSON.stringify(selectedSchedule));    
@@ -211,25 +210,6 @@ window.onload = async () => {
                         );
                         return !(isAvailableDay && isSelectedDay) || isHoliday || isBreak;
                     }
-                }
-            });
-
-            dropdown.addEventListener('change', async function() {
-                const endDate = new Date(this.value);
-                const startDate = document.querySelector('[wized="date_starDate"]').value;
-                if (startDate) {
-                    try {
-                        const daysBetween = calculateNumberOfDays(new Date(startDate), endDate, availableDays, selectedDays);
-                        const selectedSchedule = product.filter(schedule => selectedDays.includes(dayMap[schedule.DaysOfWeek]));
-                        await Wized.data.setCookie("selectedDays", JSON.stringify(selectedSchedule));    
-                        await Wized.data.setCookie("startdate", startDate);
-                        await Wized.data.setCookie("enddate", endDate);
-                        await Wized.data.setCookie("noOfDays", daysBetween);
-                    } catch (error) {
-                        console.error("Error:", error); 
-                    }
-                } else {
-                    alert('Start date not defined');
                 }
             });
 
