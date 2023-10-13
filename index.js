@@ -237,4 +237,68 @@ window.onload = async () => {
             picker_start.show();
         }, 2000);
     });
+    // Define the allowed dates
+const allowedDates = [
+    new Date('2024-06-25'),
+    new Date('2024-08-31')
+];
+
+// Determine the closest available date
+const today = new Date();
+const diff1 = Math.abs(today - allowedDates[0]);
+const diff2 = Math.abs(today - allowedDates[1]);
+
+const closestDate = diff1 < diff2 ? allowedDates[0] : allowedDates[1];
+Wized.data.setCookie("enddate", closestDate);
+
+// Create the picker
+const picker_end_date = new easepick.create({
+    element: document.getElementById('end_date'),
+    css: ['https://cdn.jsdelivr.net/npm/@easepick/bundle@1.1.7/dist/index.css'],
+    inline: true,
+    setup(picker) {
+        picker.ui.container.dataset.theme = 'dark';
+        picker.on('click', (evt) => {
+            const target = evt.target;
+        });
+        picker.on('select', async (evt) => {
+            Wized.data.setCookie("enddate", picker.getDate());
+             const endDate = evt.detail.date;
+            const startDateElement = document.querySelector('[wized="date_starDate"]');
+            const startDate = new Date(startDateElement.value);
+
+            if (startDate) {
+                try {
+                    const daysBetween = calculateNumberOfDays(startDate, endDate, availableDays, selectedDays);
+                    const selectedSchedule = product.filter(schedule => selectedDays.includes(dayMap[schedule.DaysOfWeek]));
+                    await Wized.data.setCookie("selectedDays", JSON.stringify(selectedSchedule));    
+                    await Wized.data.setCookie("startdate", startDate);
+                    await Wized.data.setCookie("enddate", endDate);
+                    await Wized.data.setCookie("noOfDays", daysBetween);
+                } catch (error) {
+                    console.error("Error:", error); 
+                }
+            } else {
+                alert('Start date not defined');
+            }
+        });
+    },
+    plugins: ['LockPlugin'],
+    LockPlugin: {
+        minDate: new Date().toISOString(),
+        filter(date) {
+            return !allowedDates.some(allowedDate => 
+                allowedDate.getDate() === date.getDate() &&
+                allowedDate.getMonth() === date.getMonth() &&
+                allowedDate.getFullYear() === date.getFullYear()
+            );
+        }
+    }
+});
+
+// Set the default date to the closest available date
+picker_end_date.setDate(closestDate);
+picker_end_date.gotoDate(closestDate); // This might force the calendar to display the month of the closest date
 };
+
+
