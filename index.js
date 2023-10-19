@@ -219,22 +219,23 @@ window.onload = async () => {
 
             radioButtons.forEach(radio => {
                 radio.addEventListener('change', async function() {
-                const endDate = new Date(this.value);
-                const startDate = document.querySelector('[wized="date_starDate"]').value;
-                if (startDate) {
-                    try {
-                        const daysBetween = calculateNumberOfDays(new Date(startDate), endDate, availableDays, selectedDays);
-                        const selectedSchedule = product.filter(schedule => selectedDays.includes(dayMap[schedule.DaysOfWeek]));
-                        await Wized.data.setCookie("selectedDays", JSON.stringify(selectedSchedule));    
-                        await Wized.data.setCookie("startdate", startDate);
-                        await Wized.data.setCookie("enddate", endDate);
-                        await Wized.data.setCookie("noOfDays", daysBetween);
-                    } catch (error) {
-                        console.error("Error:", error); 
+                    const endDate = new Date(this.value);
+                    const startDate = document.querySelector('[wized="date_starDate"]').value;
+                    if (startDate) {
+                        try {
+                            const daysBetween = calculateNumberOfDays(new Date(startDate), endDate, availableDays, selectedDays);
+                            const selectedSchedule = product.filter(schedule => selectedDays.includes(dayMap[schedule.DaysOfWeek]));
+                            await Wized.data.setCookie("selectedDays", JSON.stringify(selectedSchedule));    
+                            await Wized.data.setCookie("startdate", startDate);
+                            await Wized.data.setCookie("enddate", endDate);
+                            await Wized.data.setCookie("noOfDays", daysBetween);
+                        } catch (error) {
+                            console.error("Error:", error); 
+                        }
+                    } else {
+                        alert('Start date not defined');
                     }
-                } else {
-                    alert('Start date not defined');
-                }
+                });
             });
 
             picker.show(); 
