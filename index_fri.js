@@ -123,6 +123,7 @@ window.onload = async () => {
                             
                             if (picker_start) {
                                 picker_start.renderAll();
+                                picker.renderAll();
                             }
                         }, 200); // 200ms delay
                     });
