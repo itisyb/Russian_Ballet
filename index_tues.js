@@ -191,12 +191,47 @@ window.onload = async () => {
                         Wized.data.setCookie("startdate", startDate);
                         Wized.data.setCookie("enddate", endDate);
                         Wized.data.setCookie("noOfDays", calculateNumberOfDays(startDate, endDate, availableDays, selectedDays));
+                        
+                          
+                       if (startDate > new Date('2024-06-22') && startDate < new Date('2024-07-30')) {
+                            // Remove radio option with value 25 June 2024
+                            removeRadioButton(radioButtons, '25 June 2024');
+                        } else if (startDate <= new Date('2024-06-22')) {
+                            // Remove radio option with value 31 August 2025
+                            removeRadioButton(radioButtons, '31 August 2025');
+                        } else if (startDate >= new Date('2024-08-31')) {
+                            // Remove radio options with values 25 June 2024 and 31 August 2024
+                            removeRadioButton(radioButtons, '25 June 2024');
+                            removeRadioButton(radioButtons, '31 August 2024');
+                        } else {
+                            // Restore the original set of radio buttons
+                            restoreOriginalRadioButtons(radioButtons, originalRadioButtons);
+                        }
+                    
                         if (date instanceof Date) {
                             const lockPlugin = picker.PluginManager.getInstance('LockPlugin');
                             lockPlugin.options.maxDate = date;
                             picker.renderAll();
                         }
                     });
+                    function removeRadioButton(radioButtons, value) {
+                        radioButtons.forEach(radioButton => {
+                            if (radioButton.value === value) {
+                                radioButton.parentNode.removeChild(radioButton);
+                            }
+                        });
+                    }
+                    
+                    function restoreOriginalRadioButtons(currentRadioButtons, originalRadioButtons) {
+                        const missingRadioButtons = originalRadioButtons.filter(originalRadioButton => {
+                            return !Array.from(currentRadioButtons).some(currentRadioButton => currentRadioButton.value === originalRadioButton.value);
+                        });
+                    
+                        // Restore missing radio buttons
+                        missingRadioButtons.forEach(missingRadioButton => {
+                            document.getElementById('your_radio_button_container').appendChild(missingRadioButton);
+                        });
+                    }
                 },
                 plugins: ['LockPlugin'],
                 LockPlugin: {
