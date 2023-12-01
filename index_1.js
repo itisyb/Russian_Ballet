@@ -48,6 +48,7 @@ window.onload = async () => {
     let availableDays = [];
     let selectedDays = [];
 
+
     const dayMap = {
         'Sunday': 0,
         'Monday': 1,
@@ -217,19 +218,14 @@ window.onload = async () => {
                     function removeRadioButton(radioButtons, value) {
                         radioButtons.forEach(radioButton => {
                             if (radioButton.value === value) {
-                                radioButton.parentNode.removeChild(radioButton);
+                                radioButton.style.display = 'none'; // Hide the radio button
                             }
                         });
                     }
                     
-                    function restoreOriginalRadioButtons(currentRadioButtons, originalRadioButtons) {
-                        const missingRadioButtons = originalRadioButtons.filter(originalRadioButton => {
-                            return !Array.from(currentRadioButtons).some(currentRadioButton => currentRadioButton.value === originalRadioButton.value);
-                        });
-                    
-                        // Restore missing radio buttons
-                        missingRadioButtons.forEach(missingRadioButton => {
-                            document.getElementById('your_radio_button_container').appendChild(missingRadioButton);
+                    function restoreOriginalRadioButtons(currentRadioButtons) {
+                        currentRadioButtons.forEach(currentRadioButton => {
+                            currentRadioButton.style.display = 'inline-block'; // Show the radio button
                         });
                     }
                 },
