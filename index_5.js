@@ -193,19 +193,22 @@ window.onload = async () => {
                         Wized.data.setCookie("enddate", endDate);
                         Wized.data.setCookie("noOfDays", calculateNumberOfDays(startDate, endDate, availableDays, selectedDays));
                         
+                        // Logic for managing radio group options based on start date
+                        const radioButtons = document.querySelectorAll('input[type="radio"][name="end_date"]');
+
                           
-                       if (startDate > new Date('2024-06-22') && startDate < new Date('2024-07-30')) {
-                            // Remove radio option with value 25 June 2024
-                            removeRadioButton(radioButtons, '25 June 2024');
+                      if (startDate > new Date('2024-06-22') && startDate < new Date('2024-07-30')) {
+                            // Hide radio option with value 25 June 2024
+                            hideRadioButton(radioButtons, '25 June 2024');
                         } else if (startDate <= new Date('2024-06-22')) {
-                            // Remove radio option with value 31 August 2025
-                            removeRadioButton(radioButtons, '31 August 2025');
+                            // Hide radio option with value 31 August 2025
+                            hideRadioButton(radioButtons, '31 August 2025');
                         } else if (startDate >= new Date('2024-08-31')) {
-                            // Remove radio options with values 25 June 2024 and 31 August 2024
-                            removeRadioButton(radioButtons, '25 June 2024');
-                            removeRadioButton(radioButtons, '31 August 2024');
+                            // Hide radio options with values 25 June 2024 and 31 August 2024
+                            hideRadioButton(radioButtons, '25 June 2024');
+                            hideRadioButton(radioButtons, '31 August 2024');
                         } else {
-                            // Restore the original set of radio buttons
+                            // Restore the original visibility state of radio buttons
                             restoreOriginalRadioButtons(radioButtons);
                         }
                     
@@ -216,21 +219,21 @@ window.onload = async () => {
                         }
                     });
                     function hideRadioButton(radioButtons, value) {
-                      radioButtons.forEach(radioButton => {
-                          if (radioButton.value === value) {
-                              radioButton.dataset.originalDisplay = radioButton.parentNode.style.display; // Store original display value
-                              radioButton.parentNode.style.display = 'none'; // Hide the radio button
-                          }
-                      });
-                  }
-                  
-                  function restoreOriginalRadioButtons(radioButtons) {
-                      radioButtons.forEach(radioButton => {
-                          if (radioButton.dataset.originalDisplay !== undefined) {
-                              radioButton.parentNode.style.display = radioButton.dataset.originalDisplay; // Restore original display value
-                          }
-                      });
-                  }
+                        radioButtons.forEach(radioButton => {
+                            if (radioButton.value === value) {
+                                radioButton.dataset.originalDisplay = radioButton.parentNode.style.display; // Store original display value
+                                radioButton.parentNode.style.display = 'none'; // Hide the radio button
+                            }
+                        });
+                    }
+                    
+                    function restoreOriginalRadioButtons(radioButtons) {
+                        radioButtons.forEach(radioButton => {
+                            if (radioButton.dataset.originalDisplay !== undefined) {
+                                radioButton.parentNode.style.display = radioButton.dataset.originalDisplay; // Restore original display value
+                            }
+                        });
+                    }
                 },
                 plugins: ['LockPlugin'],
                 LockPlugin: {
