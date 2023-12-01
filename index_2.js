@@ -206,7 +206,7 @@ window.onload = async () => {
                             removeRadioButton(radioButtons, '31 August 2024');
                         } else {
                             // Restore the original set of radio buttons
-                            restoreOriginalRadioButtons(radioButtons, originalRadioButtons);
+                            restoreOriginalRadioButtons(radioButtons);
                         }
                     
                         if (date instanceof Date) {
