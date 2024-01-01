@@ -206,9 +206,11 @@ window.onload = async () => {
                         const schoolTermStartDate = new Date();
                         const schoolTermEndDate = new Date('2024-07-02');
                         const summerTermStartDate = new Date('2024-07-02');
+
                         const summerTermEndDate = new Date('2024-08-31');
                         const fullTermStartDate = new Date('2024-07-02');
                         const fullTermEndDate = new Date('2024-08-31');
+                        const summerTermStartDateNextYear = new Date('2025-07-02');
                         
                         if (startDate <= schoolTermEndDate) {
                             // School Term
@@ -217,13 +219,18 @@ window.onload = async () => {
                             // Summer Term
                             restoreOriginalRadioButtons(radioButtons);
                             // Hide radio option with value 25 June 2024
-                            hideRadioButton(radioButtons, '25 June 2024');
+                            hideRadioButton(radioButtons, '28 June 2024');
                         } else if (startDate > summerTermEndDate) {
                             // Full Term
                             // Hide radio options with values 25 June 2024 and 31 August 2024
                             restoreOriginalRadioButtons(radioButtons);
-                            hideRadioButton(radioButtons, '25 June 2024');
+                            hideRadioButton(radioButtons, '28 June 2024');
                             hideRadioButton(radioButtons, '31 August 2024');
+                        } else if (startDate > summerTermEndDate && startDate <=summerTermStartDateNextYear ) {\
+                            restoreOriginalRadioButtons(radioButtons);
+                            hideRadioButton(radioButtons, '28 June 2024');
+                            hideRadioButton(radioButtons, '31 August 2024');
+                            hideRadioButton(radioButtons, '28 June 2025');
                         } else {
                             // Restore the original visibility state of radio buttons
                             restoreOriginalRadioButtons(radioButtons);
