@@ -226,7 +226,7 @@ window.onload = async () => {
                             restoreOriginalRadioButtons(radioButtons);
                             hideRadioButton(radioButtons, '28 June 2024');
                             hideRadioButton(radioButtons, '31 August 2024');
-                        } else if (startDate > summerTermEndDate && startDate <=summerTermStartDateNextYear ) {\
+                        } else if (startDate > summerTermEndDate && startDate <=summerTermStartDateNextYear ){
                             restoreOriginalRadioButtons(radioButtons);
                             hideRadioButton(radioButtons, '28 June 2024');
                             hideRadioButton(radioButtons, '31 August 2024');
