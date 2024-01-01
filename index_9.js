@@ -209,22 +209,30 @@ window.onload = async () => {
                         const summerTermEndDate = new Date('2024-08-31');
                         const fullTermStartDate = new Date('2024-07-02');
                         const fullTermEndDate = new Date('2024-08-31');
+                        const fullTermStartDateNextYear = new Date('2024-08-31');
                         
                         if (startDate < schoolTermStartDate && startDate <= schoolTermEndDate) {
                             // School Term
                             restoreOriginalRadioButtons(radioButtons);
-                            hideRadioButton(radioButtons, '25 June 2024');
+                            hideRadioButton(radioButtons, '28 June 2024');
                         } else if (startDate >= summerTermStartDate && startDate <= summerTermEndDate) {
                             // Summer Term
                             restoreOriginalRadioButtons(radioButtons);
-                            // Hide radio option with value 31 August 2025
+                            hideRadioButton(radioButtons, '28 June 2025');
                             hideRadioButton(radioButtons, '31 August 2025');
                         } else if (startDate < fullTermStartDate && startDate <= fullTermEndDate) {
                             // Full Term
                             // Hide radio options with values 25 June 2024 and 31 August 2024
                             restoreOriginalRadioButtons(radioButtons);
-                            hideRadioButton(radioButtons, '25 June 2024');
+                            hideRadioButton(radioButtons, '28 June 2024');
                             hideRadioButton(radioButtons, '31 August 2024');
+                            
+                        } else if (startDate > fullTermEndDate && startDate <= fullTermStartDateNextYear) {
+                            
+                            restoreOriginalRadioButtons(radioButtons);
+                            hideRadioButton(radioButtons, '28 June 2024');
+                            hideRadioButton(radioButtons, '31 August 2024');
+                            hideRadioButton(radioButtons, '28 June 2025');
                         } else {
                             // Restore the original visibility state of radio buttons
                             restoreOriginalRadioButtons(radioButtons);
