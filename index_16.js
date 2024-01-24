@@ -30,10 +30,17 @@ window.onload = async () => {
 
   
 
-    function isHolidayOrBreak(date) {
-        return holidays.some(holiday => holiday.isSame(date, 'day')) ||
-               breaks.some(breakRange => date.isBetween(breakRange.start, breakRange.end, 'day', '[]'));
-    }
+function isHolidayOrBreak(date) {
+    return holidays.some(holiday => 
+        holiday.date() === date.date() &&
+        holiday.month() === date.month() &&
+        holiday.year() === date.year()
+    ) ||
+    breaks.some(breakRange => 
+        date.isBetween(breakRange.start, breakRange.end, 'day', '[]')
+    );
+}
+
 
     // Function to calculate number of days excluding holidays and breaks
     function calculateNumberOfDays(startDate, endDate, availableDays, selectedDays) {
@@ -168,15 +175,16 @@ window.onload = async () => {
                 LockPlugin: {
                     minDate: new Date().toISOString(),
                     filter(date, picked) {
-                        const isAvailableDay = availableDays.includes(date.getDay());
-                        const isSelectedDay = selectedDays.includes(date.getDay());
+                        const momentDate = moment(date);
+                        const isAvailableDay = availableDays.includes(momentDate.day());
+                        const isSelectedDay = selectedDays.includes(momentDate.day());
                         const isHoliday = holidays.some(holiday => 
-                            holiday.getDate() === date.getDate() &&
-                            holiday.getMonth() === date.getMonth() &&
-                            holiday.getFullYear() === date.getFullYear()
+                            holiday.date() === momentDate.date() &&
+                            holiday.month() === momentDate.month() &&
+                            holiday.year() === momentDate.year()
                         );
                         const isBreak = breaks.some(breakRange => 
-                            date >= breakRange.start && date <= breakRange.end
+                            momentDate.isBetween(breakRange.start, breakRange.end, 'day', '[]')
                         );
                         return !(isAvailableDay && isSelectedDay) || isHoliday || isBreak;
                     }
