@@ -30,26 +30,28 @@ window.onload = async () => {
 
   
 
+    function isHolidayOrBreak(date) {
+        return holidays.some(holiday => holiday.isSame(date, 'day')) ||
+               breaks.some(breakRange => date.isBetween(breakRange.start, breakRange.end, 'day', '[]'));
+    }
+
+    // Function to calculate number of days excluding holidays and breaks
     function calculateNumberOfDays(startDate, endDate, availableDays, selectedDays) {
-        var count = 0;
-        var curDate = new Date(startDate.getTime());
-        while (curDate < endDate) {
-            var dayOfWeek = curDate.getDay();
-            const isHoliday = holidays.some(holiday => 
-                holiday.getDate() === curDate.getDate() &&
-                holiday.getMonth() === curDate.getMonth() &&
-                holiday.getFullYear() === curDate.getFullYear()
-            );
-            const isBreak = breaks.some(breakRange => 
-                curDate >= breakRange.start && curDate <= breakRange.end
-            );
-            if (availableDays.includes(dayOfWeek) && selectedDays.includes(dayOfWeek) && !isHoliday && !isBreak) {
+        let count = 0;
+        let curDate = moment(startDate);
+
+        while (curDate.isBefore(endDate)) {
+            if (availableDays.includes(curDate.day()) &&
+                selectedDays.includes(curDate.day()) &&
+                !isHolidayOrBreak(curDate)) {
                 count++;
             }
-            curDate.setDate(curDate.getDate() + 1);
+            curDate.add(1, 'days');
         }
+
         return count;
     }
+
 
     let picker, picker_start;
     let availableDays = [];
