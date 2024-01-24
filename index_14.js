@@ -1,7 +1,4 @@
 var urlParams = new URLSearchParams(window.location.search);
-const moment = require('moment-timezone');
-
-
 if (urlParams.get('trial') === 'true') {
     var element = document.querySelector('[wized="non_trial_wrapper"]');
     if (element) {
