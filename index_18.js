@@ -53,38 +53,32 @@ function getEasterDate(year) {
 window.onload = async () => {
 const currentYear = moment().year();
 
-    const breaks = [
-        { start: moment(`${currentYear}-12-20`), end: moment(`${currentYear + 1}-01-02`) }, // Winter Break only applies for group classes
-        { start: moment(`${currentYear}-06-26`), end: moment(`${currentYear}-07-01`) }  // Summer Break
-    ];
+const show_date = `${currentYear}-06-28`2
+ 
 
-//fall break September 1st to labour day(Canadian one)
-//Canadian Thanksgiving
-//family day (canadian)
-//good friday
-//victoria
-//dress rehersal( 23 june )
-//june 28th 2024 show date
-//summerbreak from date of show to canada day
-//civic holiday is dynamic
+  const years = [2024, 2025, 2026];
+    let holidays = [];
+
+    years.forEach(year => {
+        // Add fixed-date holidays for each year
+        holidays.push(...getFixedHolidays(year));
+
+        // Add dynamic holidays for each year
+        holidays.push(...getDynamicHolidays(year));
+
+        // Add breaks for each year
+        holidays.push(...getBreaks(year));
+    });
+
+    // Example: Log dates
+    holidays.forEach(date => {
+        console.log(date.format('YYYY-MM-DD'));
+    });
 
 
 
-    const holidays = [
-        // Add your fixed-date holidays here, using currentYear
-            moment('2024-02-19'), // This appears to be a specific date, not a recurring holiday
-            moment('2024-07-01'), // Canada Day
-            moment('2024-06-23'), // St. Jean Baptiste Day (Quebec)
-            moment('2024-06-28'), // This appears to be a specific date, not a recurring holiday
-            moment('2024-06-29'), // This appears to be a specific date, not a recurring holiday
-            moment('2024-06-30'), // This appears to be a specific date, not a recurring holiday
-            moment('2024-09-01'), // This appears to be a specific date, not a recurring holiday
-          ];
 
-    // Add dynamic holidays
-    const dynamicHolidays = getDynamicHolidays(currentYear);
-    holidays.push(...dynamicHolidays);
-  
+
 
 function isHolidayOrBreak(date) {
     return holidays.some(holiday => 
