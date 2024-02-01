@@ -15,8 +15,8 @@ function getDynamicHolidays(year) {
     dynamicHolidays.push(moment(goodFriday));
 
     // Easter Monday (the day after Easter Sunday)
-    let easterMonday = getEasterDate(year).add(1, 'days');
-    dynamicHolidays.push(moment(easterMonday));
+    //let easterMonday = getEasterDate(year).add(1, 'days');
+    //dynamicHolidays.push(moment(easterMonday));
 
     // Thanksgiving (second Monday of October)
     let thanksgiving = moment(`${year}-10-01`).startOf('month').day(8);
@@ -54,9 +54,21 @@ window.onload = async () => {
 const currentYear = moment().year();
 
     const breaks = [
-        { start: moment(`${currentYear}-12-20`), end: moment(`${currentYear + 1}-01-02`) }, // Winter Break
+        { start: moment(`${currentYear}-12-20`), end: moment(`${currentYear + 1}-01-02`) }, // Winter Break only applies for group classes
         { start: moment(`${currentYear}-06-26`), end: moment(`${currentYear}-07-01`) }  // Summer Break
     ];
+
+//fall break September 1st to labour day(Canadian one)
+//Canadian Thanksgiving
+//family day (canadian)
+//good friday
+//victoria
+//dress rehersal( 23 june )
+//june 28th 2024 show date
+//summerbreak from date of show to canada day
+//civic holiday is dynamic
+
+
 
     const holidays = [
         // Add your fixed-date holidays here, using currentYear
